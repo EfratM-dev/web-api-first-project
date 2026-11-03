@@ -15,11 +15,5 @@ namespace WebApi
         public int Id { get; set; }
     }
 
-    public class LogUser
-    {
-        [Required]
-        public string Email { get; set; }
-        [Required]
-        public string Password { get; set; }
-    }
+    
 }

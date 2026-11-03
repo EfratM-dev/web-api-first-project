@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Runtime.Intrinsics.Arm;
 using System.Text.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -12,7 +11,7 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
-        static string FilePath = "Users.txt";
+        static readonly string FilePath = "Users.txt";
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -52,7 +51,7 @@ namespace WebApi.Controllers
 
 
         [HttpPost("login")]
-        public ActionResult<User> Login([FromBody] LogUser loginUser)
+        public ActionResult<User> Login([FromBody] LoginUser loginUser)
         {
             
             using (StreamReader reader = System.IO.File.OpenText(FilePath))
@@ -69,14 +68,14 @@ namespace WebApi.Controllers
                 }
             }
             
-            return NotFound();
+            return NoContent();
         }
 
 
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] User putuser)
+        public IActionResult Put(int id, [FromBody] User userToUpdate)
         {
             string textToReplace = string.Empty;
             using (StreamReader reader = System.IO.File.OpenText(FilePath))
@@ -86,15 +85,20 @@ namespace WebApi.Controllers
                 {
                     User user = JsonSerializer.Deserialize<User>(currentUserInFile);
                     if (user.Id == id)
+                    {
                         textToReplace = currentUserInFile;
+                        break;
+                    }
                 }
             }
             if (textToReplace != string.Empty)
             {
+                userToUpdate.Id = id;
                 string text = System.IO.File.ReadAllText(FilePath);
-                text = text.Replace(textToReplace, JsonSerializer.Serialize(putuser));
+                text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
                 System.IO.File.WriteAllText(FilePath, text);
             }
+            return Ok();
         }
 
         // DELETE api/<UsersController>/5

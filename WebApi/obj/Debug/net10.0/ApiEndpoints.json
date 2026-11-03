@@ -196,18 +196,12 @@
         "IsRequired": true
       },
       {
-        "Name": "putuser",
+        "Name": "userToUpdate",
         "Type": "WebApi.User",
         "IsRequired": true
       }
     ],
-    "ReturnTypes": [
-      {
-        "Type": "System.Void",
-        "MediaTypes": [],
-        "StatusCode": 200
-      }
-    ]
+    "ReturnTypes": []
   },
   {
     "ContainingType": "WebApi.Controllers.UsersController",
@@ -241,7 +235,7 @@
     "Parameters": [
       {
         "Name": "loginUser",
-        "Type": "WebApi.LogUser",
+        "Type": "WebApi.LoginUser",
         "IsRequired": true
       }
     ],
