@@ -11,7 +11,7 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
-        static readonly string FilePath = "Users.txt";
+        
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
