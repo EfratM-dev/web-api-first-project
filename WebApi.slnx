@@ -2,5 +2,8 @@
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
+  <Project Path="Entities/Entities.csproj" Id="1989ea8d-7d9b-4ce3-ae77-4891f6a079f5" />
+  <Project Path="Repository/Repository.csproj" Id="bfb1df0d-1e11-4e60-a8bd-61b5ca0bd069" />
+  <Project Path="Services/Services.csproj" Id="f8b5912e-f63c-43d4-bb25-6a44b6b79491" />
   <Project Path="WebApi/WebApi.csproj" />
 </Solution>

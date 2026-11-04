@@ -5,7 +5,7 @@ using Entities;
 
 namespace Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         static readonly string FilePath = "Users.txt";
         public IEnumerable<string> Get()
@@ -79,7 +79,7 @@ namespace Repository
                 text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
                 System.IO.File.WriteAllText(FilePath, text);
             }
-           
+
         }
     }
 }

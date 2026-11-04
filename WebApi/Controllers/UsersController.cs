@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Services;
 using System.Text.Json;
+using Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,27 +13,27 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
-        
+        private IUserService userService;
+
+        public UsersController(IUserService userService)
+        {
+            this.userService = userService;
+        }
+
         // GET: api/<UsersController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "Riki", "Efrat" };
+            return userService.Get();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         public ActionResult<User> Get(int id)
         {
-            using (StreamReader reader = System.IO.File.OpenText(FilePath))
+            if(userService.GetById(id) != null)
             {
-                string? currentUserInFile;
-                while ((currentUserInFile = reader.ReadLine()) != null)
-                {
-                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (user.Id == id)
-                        return user;
-                }
+                return userService.GetById(id);
             }
             return NoContent();
             
@@ -41,12 +43,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
-      
-            int numberOfUsers = System.IO.File.ReadLines(FilePath).Count();
-            user.Id = numberOfUsers + 1;
-            string userJson = JsonSerializer.Serialize(user);
-            System.IO.File.AppendAllText(FilePath, userJson + Environment.NewLine);
-            return CreatedAtAction(nameof(Get),new {Id = user.Id },user);
+            user = userService.Post(user);
+            return CreatedAtAction(nameof(Get),new {Id = user.Id }, user);
         }
 
 
@@ -54,21 +52,11 @@ namespace WebApi.Controllers
         public ActionResult<User> Login([FromBody] LoginUser loginUser)
         {
             
-            using (StreamReader reader = System.IO.File.OpenText(FilePath))
-            {
-                string? currentUserInFile;
-                while ((currentUserInFile = reader.ReadLine()) != null)
-                {
-                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (user.Email == loginUser.Email && user.Password == loginUser.Password)
-                    {
-                        return Ok(user);
-                    }
-                        
-                }
-            }
-            
-            return NoContent();
+           if(userService.Login(loginUser)!= null)
+           {
+               return Ok(userService.Login(loginUser));
+           } 
+           return NoContent();
         }
 
 
@@ -77,27 +65,7 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User userToUpdate)
         {
-            string textToReplace = string.Empty;
-            using (StreamReader reader = System.IO.File.OpenText(FilePath))
-            {
-                string currentUserInFile;
-                while ((currentUserInFile = reader.ReadLine()) != null)
-                {
-                    User user = JsonSerializer.Deserialize<User>(currentUserInFile);
-                    if (user.Id == id)
-                    {
-                        textToReplace = currentUserInFile;
-                        break;
-                    }
-                }
-            }
-            if (textToReplace != string.Empty)
-            {
-                userToUpdate.Id = id;
-                string text = System.IO.File.ReadAllText(FilePath);
-                text = text.Replace(textToReplace, JsonSerializer.Serialize(userToUpdate));
-                System.IO.File.WriteAllText(FilePath, text);
-            }
+            userService.Put(id, userToUpdate);
             return Ok();
         }
 

@@ -3,28 +3,34 @@ using Repository;
 
 namespace Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
-        UserRepository repository = new UserRepository();
+        private IUserRepository userRepository;
+
+        public UserService(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         public IEnumerable<string> Get()
         {
-            return repository.Get();
+            return userRepository.Get();
         }
         public User GetById(int id)
         {
-           return repository.GetById(id);
+            return userRepository.GetById(id);
         }
         public User Post(User user)
         {
-            return repository.Post(user);
+            return userRepository.Post(user);
         }
         public User Login(LoginUser loginUser)
         {
-            return repository.Login(loginUser);
+            return userRepository.Login(loginUser);
         }
         public void Put(int id, User userToUpdate)
         {
-            repository.Put(id, userToUpdate);
+            userRepository.Put(id, userToUpdate);
         }
     }
 }
