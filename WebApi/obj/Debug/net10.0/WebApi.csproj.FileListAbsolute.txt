@@ -231,3 +231,9 @@ E:\API\אסתי בוחבוט ואפרת מדן\WebApi\obj\Debug\net10.0\compress
 E:\API\אסתי בוחבוט ואפרת מדן\WebApi\obj\Debug\net10.0\compressed\7tluppyqjb-{0}-haf7lvbw8z-haf7lvbw8z.gz
 E:\API\אסתי בוחבוט ואפרת מדן\WebApi\obj\Debug\net10.0\WebApi.csproj.Up2Date
 E:\API\אסתי בוחבוט ואפרת מדן\WebApi\obj\Debug\net10.0\compressed\rn9dbvcspw-{0}-qs0cdt9zui-qs0cdt9zui.gz
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Entities.dll
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Repository.dll
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Services.dll
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Entities.pdb
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Services.pdb
+E:\API\אסתי בוחבוט ואפרת מדן\WebApi\bin\Debug\net10.0\Repository.pdb

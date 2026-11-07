@@ -33,7 +33,17 @@
         "IsRequired": true
       }
     ],
-    "ReturnTypes": []
+    "ReturnTypes": [
+      {
+        "Type": "System.Int32",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   },
   {
     "ContainingType": "WebApi.Controllers.PasswordsController",
@@ -140,13 +150,13 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "WebApi.User",
+        "Type": "Entities.User",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "WebApi.User",
+        "Type": "Entities.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -172,7 +182,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "WebApi.User",
+        "Type": "Entities.User",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -197,7 +207,7 @@
       },
       {
         "Name": "userToUpdate",
-        "Type": "WebApi.User",
+        "Type": "Entities.User",
         "IsRequired": true
       }
     ],
@@ -235,13 +245,13 @@
     "Parameters": [
       {
         "Name": "loginUser",
-        "Type": "WebApi.LoginUser",
+        "Type": "Entities.LoginUser",
         "IsRequired": true
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "WebApi.User",
+        "Type": "Entities.User",
         "MediaTypes": [
           "text/plain",
           "application/json",

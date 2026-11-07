@@ -31,10 +31,10 @@ namespace WebApi.Controllers
 
         // POST api/<PasswordController>
         [HttpPost]
-        public IActionResult Post([FromBody] string password)
+        public ActionResult<int> Post([FromBody] string password)
         {
            
-            return Ok(passwordService.Post(password));
+            return passwordService.Post(password);
         }
 
         // PUT api/<PasswordController>/5

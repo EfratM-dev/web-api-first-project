@@ -10,9 +10,10 @@ namespace WebApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-
     public class UsersController : ControllerBase
     {
+        IPasswordService passwordService = new PasswordService();
+        PasswordsController passwordsController = new PasswordsController(passwordService);
         private IUserService userService;
 
         public UsersController(IUserService userService)
@@ -43,6 +44,13 @@ namespace WebApi.Controllers
         [HttpPost]
         public ActionResult<User> Post([FromBody] User user)
         {
+           
+            int passwordStrength = (passwordsController.Post(user.Password)).Value;
+
+            if (passwordStrength < 3)
+            {
+                return BadRequest();
+            }
             user = userService.Post(user);
             return CreatedAtAction(nameof(Get),new {Id = user.Id }, user);
         }
@@ -65,6 +73,13 @@ namespace WebApi.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] User userToUpdate)
         {
+
+            int passwordStrength = (passwordsController.Post(userToUpdate.Password)).Value;
+
+            if (passwordStrength < 3)
+            {
+                return BadRequest();
+            }
             userService.Put(id, userToUpdate);
             return Ok();
         }
