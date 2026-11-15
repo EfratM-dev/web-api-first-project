@@ -12,7 +12,9 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
+        //Who creates PasswordService here? With DI, the controller receives IPasswordService in its constructor
         IPasswordService passwordService = new PasswordService();
+        //The build fails (CS0236): a field initializer cannot use the field passwordService. Why is this controller created here?
         PasswordsController passwordsController = new PasswordsController(passwordService);
         private IUserService userService;
 
