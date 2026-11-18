@@ -12,25 +12,25 @@ namespace Services
             this.userRepository = userRepository;
         }
 
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<User>> Get()
         {
-            return userRepository.Get();
+            return await userRepository.Get();
         }
-        public User GetById(int id)
+        public async  Task<User> GetById(int id)
         {
-            return userRepository.GetById(id);
+            return await userRepository.GetById(id);
         }
-        public User Post(User user)
+        public async Task<User> Post(User user)
         {
-            return userRepository.Post(user);
+            return await userRepository.Post(user);
         }
-        public User Login(LoginUser loginUser)
+        public async Task<User> Login(LoginUser loginUser)
         {
-            return userRepository.Login(loginUser);
+            return await userRepository.Login(loginUser);
         }
-        public void Put(int id, User userToUpdate)
+        public async Task Put(int id, User userToUpdate)
         {
-            userRepository.Put(id, userToUpdate);
+            await userRepository.Put(id, userToUpdate);
         }
     }
 }

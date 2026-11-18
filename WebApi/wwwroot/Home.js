@@ -19,11 +19,6 @@
         const score = await response.json();
         const progress = document.querySelector("#passwordProgress");
         progress.value = score;
-        if (score < 3) {
-            throw ("not a strong password");
-        }
-
-
     }
     catch (e) {
         alert(e);
@@ -40,7 +35,7 @@ const signIn = async () => {
         const progress = document.querySelector("#passwordProgress").value;
 
         if (progress < 3) {
-            return;
+             throw ("not a strong password");
         }
     
         const postData = {
@@ -118,4 +113,18 @@ const newUser = () => {
     newUser.style.display = "none"
 }
 
+
+// const getProducts = async () => {
+
+//     try {
+
+//         const response = await fetch('api/products');
+//         if (!response.ok) {
+//             throw "no products";
+//         }
+//     }
+//     catch (e) {
+//         alert(e);
+//     }
+// }
 

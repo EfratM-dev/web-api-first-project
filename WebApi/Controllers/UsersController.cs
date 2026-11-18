@@ -12,7 +12,7 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
-        IPasswordService passwordService = new PasswordService();
+        static IPasswordService passwordService = new PasswordService();
         PasswordsController passwordsController = new PasswordsController(passwordService);
         private IUserService userService;
 
@@ -23,18 +23,18 @@ namespace WebApi.Controllers
 
         // GET: api/<UsersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<User>> Get()
         {
-            return userService.Get();
+            return await userService.Get();
         }
 
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public ActionResult<User> Get(int id)
+        public async Task<ActionResult<User>> Get(int id)
         {
             if(userService.GetById(id) != null)
             {
-                return userService.GetById(id);
+                return await userService.GetById(id);
             }
             return NoContent();
             
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         
         // POST api/<UsersController>
         [HttpPost]
-        public ActionResult<User> Post([FromBody] User user)
+        public async Task<ActionResult<User>> Post([FromBody] User user)
         {
            
             int passwordStrength = (passwordsController.Post(user.Password)).Value;
@@ -51,18 +51,18 @@ namespace WebApi.Controllers
             {
                 return BadRequest();
             }
-            user = userService.Post(user);
+            user = await userService.Post(user);
             return CreatedAtAction(nameof(Get),new {Id = user.Id }, user);
         }
 
 
         [HttpPost("login")]
-        public ActionResult<User> Login([FromBody] LoginUser loginUser)
+        public async Task<ActionResult<User>> Login([FromBody] LoginUser loginUser)
         {
             
-           if(userService.Login(loginUser)!= null)
+           if(await userService.Login(loginUser)!= null)
            {
-               return Ok(userService.Login(loginUser));
+               return Ok(await userService.Login(loginUser));
            } 
            return NoContent();
         }
@@ -71,7 +71,7 @@ namespace WebApi.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] User userToUpdate)
+        public async Task<IActionResult> Put(int id, [FromBody] User userToUpdate)
         {
 
             int passwordStrength = (passwordsController.Post(userToUpdate.Password)).Value;
@@ -80,7 +80,7 @@ namespace WebApi.Controllers
             {
                 return BadRequest();
             }
-            userService.Put(id, userToUpdate);
+            await userService.Put(id, userToUpdate);
             return Ok();
         }
 

@@ -10,4 +10,5 @@ E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\Entiti
 E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\refint\Entities.dll
 E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\Entities.pdb
 E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\ref\Entities.dll
+E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\Entities.csproj.AssemblyReference.cache
 E:\API\אסתי בוחבוט ואפרת מדן\Entities\obj\Debug\net10.0\Entities.csproj.Up2Date
