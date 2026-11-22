@@ -21,6 +21,7 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> Get()
         {
+            //In C#, local variables are written in camelCase, and names should say what they hold: products
             IEnumerable<Product> p = await productService.Get();
             return p == null? NoContent(): Ok(p);
         }

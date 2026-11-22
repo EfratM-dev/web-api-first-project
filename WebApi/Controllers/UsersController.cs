@@ -12,7 +12,9 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
+        //Who creates this PasswordService? With DI, the service receives IPasswordService in its constructor
         static IPasswordService passwordService = new PasswordService();
+        //Why doesn't UsersController take IPasswordService in its constructor and call it? The assignment asks the users controller and the password controller both to take the password service's interface and call it
         PasswordsController passwordsController = new PasswordsController(passwordService);
         private IUserService userService;
 
