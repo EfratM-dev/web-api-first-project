@@ -31,6 +31,11 @@ namespace Repository
             return user;
         }
 
+        public async Task<bool> IsEmailExist(string email)
+        {
+            return await storeDBContext.Users.AnyAsync(user => user.Email == email);
+        }
+
         public async Task<User> Login(LoginUser loginUser)
         {
             return await storeDBContext.Users.Where(user => user.Email == loginUser.Email && user.Password == loginUser.Password).FirstOrDefaultAsync();

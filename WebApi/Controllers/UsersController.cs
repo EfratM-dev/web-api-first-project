@@ -12,13 +12,19 @@ namespace WebApi.Controllers
 
     public class UsersController : ControllerBase
     {
-        static IPasswordService passwordService = new PasswordService();
-        PasswordsController passwordsController = new PasswordsController(passwordService);
+        PasswordsController passwordsController;
         private IUserService userService;
-
-        public UsersController(IUserService userService)
+        IConfiguration configuration;
+        ILogger<UsersController> logger;
+        static IPasswordService passwordService;
+        public UsersController(IUserService userService, IConfiguration configuration, ILogger<UsersController> logger)
         {
             this.userService = userService;
+            this.configuration = configuration;
+            this.logger = logger;
+            passwordService = new PasswordService();
+            this.passwordsController = new PasswordsController(passwordService, configuration);
+
         }
 
         // GET: api/<UsersController>
@@ -44,15 +50,21 @@ namespace WebApi.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> Post([FromBody] User user)
         {
-           
-            int passwordStrength = (passwordsController.Post(user.Password)).Value;
+            int passwordStrength = (passwordsController.Post(user.Password));
 
-            if (passwordStrength < 3)
+            if (passwordStrength < int.Parse(configuration["passwordStrength"]))
             {
-                return BadRequest();
+                return BadRequest("not a strong password");
             }
-            user = await userService.Post(user);
-            return CreatedAtAction(nameof(Get),new {Id = user.Id }, user);
+            try
+            {
+                user = await userService.Post(user);
+                return CreatedAtAction(nameof(Get), new { Id = user.Id }, user);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -62,6 +74,7 @@ namespace WebApi.Controllers
             
            if(await userService.Login(loginUser)!= null)
            {
+               logger.LogInformation("user sucssesfuly log in");
                return Ok(await userService.Login(loginUser));
            } 
            return NoContent();
@@ -74,11 +87,11 @@ namespace WebApi.Controllers
         public async Task<IActionResult> Put(int id, [FromBody] User userToUpdate)
         {
 
-            int passwordStrength = (passwordsController.Post(userToUpdate.Password)).Value;
+            int passwordStrength = (passwordsController.Post(userToUpdate.Password));
 
-            if (passwordStrength < 3)
+            if (passwordStrength < int.Parse(configuration["passwordStrength"]))
             {
-                return BadRequest();
+                return BadRequest("not a strong password");
             }
             await userService.Put(id, userToUpdate);
             return Ok();

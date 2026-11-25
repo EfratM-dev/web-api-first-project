@@ -1,4 +1,6 @@
-﻿namespace Services
+﻿using Zxcvbn;
+
+namespace Services
 {
     public interface IPasswordService
     {

@@ -22,6 +22,11 @@ namespace Services
         }
         public async Task<User> Post(User user)
         {
+            bool emailExist = await userRepository.IsEmailExist(user.Email);
+            if(emailExist)
+            {
+                throw new Exception("Email already exist");
+            }
             return await userRepository.Post(user);
         }
         public async Task<User> Login(LoginUser loginUser)

@@ -14,7 +14,7 @@
         })
 
         if (!response.ok) {
-            throw ("try again");
+             throw ("try again");
         }
         const score = await response.json();
         const progress = document.querySelector("#passwordProgress");
@@ -55,8 +55,12 @@ const signIn = async () => {
 
         if (response.ok)
             alert("user wes successfully added");
-        else
-            throw ("try again");
+        else/////???????????????????????????????????????
+        {
+            const e = await response.json();
+            throw (e);
+        }
+            
     }
     catch (e) {
         alert(e);
@@ -113,18 +117,4 @@ const newUser = () => {
     newUser.style.display = "none"
 }
 
-
-// const getProducts = async () => {
-
-//     try {
-
-//         const response = await fetch('api/products');
-//         if (!response.ok) {
-//             throw "no products";
-//         }
-//     }
-//     catch (e) {
-//         alert(e);
-//     }
-// }
 

@@ -11,9 +11,11 @@ namespace WebApi.Controllers
     public class PasswordsController : ControllerBase
     {
         IPasswordService passwordService;
-        public PasswordsController(IPasswordService passwordService)
+        IConfiguration configuration;
+        public PasswordsController(IPasswordService passwordService, IConfiguration configuration)
         {
             this.passwordService = passwordService;
+            this.configuration = configuration;
         }
         // GET: api/<PasswordController>
         [HttpGet]
@@ -31,10 +33,9 @@ namespace WebApi.Controllers
 
         // POST api/<PasswordController>
         [HttpPost]
-        public ActionResult<int> Post([FromBody] string password)
+        public int Post([FromBody] string password)
         {
-           
-            return passwordService.Post(password);
+            return passwordService.Post(password);        
         }
 
         // PUT api/<PasswordController>/5

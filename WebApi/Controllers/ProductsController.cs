@@ -19,17 +19,22 @@ namespace WebApi.Controllers
             this.productService = productService;
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> Get()
+        public async Task<ActionResult<IEnumerable<Product>>> Get(string? name, int? maxPrice, int? minPrice, string? desc, [FromQuery] int?[] categoryIds)
         {
-            IEnumerable<Product> p = await productService.Get();
+            IEnumerable<Product> p = await productService.Get(name, maxPrice, minPrice, desc, categoryIds);
             return p == null? NoContent(): Ok(p);
         }
 
         // GET api/<ProductsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<Product>> Get(int id)
         {
-            return "value";
+
+            if (productService.GetById(id) != null)
+            {
+                return await productService.GetById(id);
+            }
+            return NoContent();
         }
 
         // POST api/<ProductsController>
